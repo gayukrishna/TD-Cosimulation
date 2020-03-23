@@ -1,0 +1,53 @@
+Clear 
+
+
+new circuit.IEEE9Nodeckt 
+~ basekv=16.5 pu=1.040 Bus1=Bus1 MVASC3=500000  500000
+
+!GENERATORS
+New Generator.B2  Bus1=Bus2  conn = wye kV= 18 kW=163000 Model=3 Vpu=1.025 Maxkvar=300000 Minkvar=-300000  !kvar=300000
+New Generator.B3  Bus1=Bus3  conn = wye kV= 13.8 kW=85000 Model=3 Vpu=1.025 Maxkvar=300000 Minkvar=-300000   !kvar=-11000
+
+!TRANSFORMERS
+New Transformer.Sub1 Phases=3 Windings=2   XHL=6.25 %loadloss=0
+~ wdg=1 bus=Bus2   conn=wye  kv=18  kva=100000    
+~ wdg=2 bus=Bus7     conn=wye    kv=230  kva=100000    
+
+New Transformer.Sub2 Phases=3 Windings=2   XHL=5.86 %loadloss=0
+~ wdg=1 bus=Bus3   conn=wye  kv=13.8  kva=100000  
+~ wdg=2 bus=Bus9     conn=wye    kv=230  kva=100000    
+
+New Transformer.Sub3 Phases=3 Windings=2   XHL=5.76 %loadloss=0
+~ wdg=1 bus=Bus1   conn=wye  kv=16.5  kva=100000  
+~ wdg=2 bus=Bus4     conn=wye    kv=230  kva=100000   
+
+!LINE CODES
+New linecode.bus7_bus8 nphases=3 BaseFreq=60 
+~ rmatrix = (6.5912 | 3.8112 6.5912 | 3.8112 3.8112 6.5912 ) 
+~ xmatrix = (53.2564 | 23.9676 53.2564 | 23.9676 23.9676 53.2564 ) 
+~ Cmatrix = [1140 | -260 1140 | -260 -260 1140 ]
+~ units=mi
+
+
+!LOAD DEFINITIONS 
+New Load.Load8 Bus1=Bus8.1.2.3 Conn=Wye kV=230   kW=100000 kvar=35000
+New Load.Load5 Bus1=Bus5.1.2.3 Conn=Wye kV=230   kW=125000 kvar=50000
+New Load.Load6 Bus1=Bus6.1.2.3 Conn=Wye kV=230   kW=90000 kvar=30000
+
+!LINE DEFINITIONS 
+New Line.Line7_8    Phases=3 Bus1=Bus7.1.2.3    Bus2=Bus8.1.2.3  LineCode=bus7_bus8 Length=1 units=mi 
+New Line.Line8_9    Phases=3 Bus1=Bus8.1.2.3    Bus2=Bus9.1.2.3  LineCode=bus7_bus8 Length=1 units=mi    
+New Line.Line7_5    Phases=3 Bus1=Bus7.1.2.3    Bus2=Bus5.1.2.3  LineCode=bus7_bus8 Length=1 units=mi   
+New Line.Line5_4    Phases=3 Bus1=Bus5.1.2.3    Bus2=Bus4.1.2.3  LineCode=bus7_bus8 Length=1 units=mi   
+New Line.Line4_6    Phases=3 Bus1=Bus4.1.2.3    Bus2=Bus6.1.2.3  LineCode=bus7_bus8 Length=1 units=mi
+New Line.Line6_9    Phases=3 Bus1=Bus6.1.2.3    Bus2=Bus9.1.2.3  LineCode=bus7_bus8 Length=1 units=mi
+
+Set Maxiter = 100
+Set Voltagebases=[230, 18, 16.5, 13.8]
+Calcvoltagebases
+calcv
+Solve
+Show Voltages LN Nodes
+Show Y
+
+ 

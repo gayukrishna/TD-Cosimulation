@@ -1,0 +1,3 @@
+New Circuit.ckt24 bus1=SourceBus.1 pu= 1.029367 angle= 8.190133 basekV=132.79 phase=1 R1=0.63 X1=6.72 R0=4.07 X0=15.55 
+New Vsource.Source_2 bus1=SourceBus.2 pu= 1.011446 angle= -111.005454 basekV=132.79 phase=1 R1=0.63 X1=6.72 R0=4.07 X0=15.55 
+New Vsource.Source_3 bus1=SourceBus.3  pu= 1.032532 angle= 129.446694 basekV=132.79 phase=1 R1=0.63 X1=6.72 R0=4.07 X0=15.55 
